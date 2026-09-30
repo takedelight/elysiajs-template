@@ -46,36 +46,38 @@ bun run dev                 # http://localhost:3000
 { "error": { "code": "NOT_FOUND", "message": "GET /nope not found" } }
 ```
 
-Новые роуты добавляйте внутри `src/routes/index.ts` в `.group("/api/v1", ...)`.
+Новый модуль — папка `src/modules/<name>/index.ts` с Elysia-контроллером (при
+необходимости `service.ts` для бизнес-логики и `model.ts` для Typebox-схем),
+подключите его в `src/app.ts` через `.use()`. Путь `/api/v1/...` объявляйте
+внутри контроллера через `.group("/api/v1", ...)`.
 
 ## Структура
 
 ```
 src/
-├── main.ts               # точка входа: listen + graceful shutdown
-├── app.ts                # Elysia-инстанс без listen (его тестируют)
-├── app.test.ts           # тесты
-├── routes/
-│   ├── index.ts          # / и группа /api/v1
-│   └── health.ts         # GET /health
+├── main.ts                # точка входа: listen + graceful shutdown
+├── app.ts                 # Elysia-инстанс без listen — собирает модули
+├── modules/
+│   ├── system/index.ts    # контроллер: GET / и группа /api/v1
+│   └── health/index.ts    # контроллер: GET /health
 └── utils/
-    ├── env/env.schema.ts # zod-схема env, приложение падает при невалидном env
-    ├── database/db.ts    # drizzle-подключение
-    ├── database/schema.ts# таблицы drizzle
-    ├── errors.ts         # единый формат ошибок
-    └── logger.ts         # логгер запросов
-drizzle/                  # сгенерированные миграции
+    ├── env/index.ts       # zod-схема env, приложение падает при невалидном env
+    ├── database/index.ts  # drizzle-подключение
+    ├── database/schema.ts # таблицы drizzle
+    ├── errors/index.ts    # единый формат ошибок
+    └── logger/index.ts    # логгер запросов
+drizzle/                   # сгенерированные миграции
 drizzle.config.ts
-docker-compose.yaml       # postgres + minio
+docker-compose.yaml        # postgres + minio
 ```
 
 ## Переменные окружения
 
-Скопируйте `.env.example` → `.env`. Схема в `src/utils/env/env.schema.ts` проверяет
+Скопируйте `.env.example` → `.env`. Схема в `src/utils/env/index.ts` проверяет
 `NODE_ENV`, `PORT`, `DATABASE_URL`, `JWT_SECRET` при старте и завершает процесс при ошибке.
 
 Оксилинт запрещает обращения к `Bun.env`/`process.env` вне этой схемы — берите env только
-через `import { env } from "@/utils/env/env.schema"`.
+через `import { env } from "@/utils/env"`.
 
 ## База данных
 
@@ -83,7 +85,7 @@ docker-compose.yaml       # postgres + minio
 2. `bun run db:generate` — создать SQL-миграцию в `drizzle/`
 3. `bun run db:migrate` — применить
 
-Подключение — `src/utils/database/db.ts`, URL берётся из env-схемы.
+Подключение — `src/utils/database/index.ts`, URL берётся из env-схемы.
 
 ## Docker
 

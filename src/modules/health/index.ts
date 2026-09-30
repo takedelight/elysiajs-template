@@ -1,8 +1,8 @@
 import { Elysia } from "elysia";
 import { sql } from "drizzle-orm";
-import { db } from "@/utils/database/db";
+import { db } from "@/utils/database";
 
-export const healthRoutes = new Elysia({ name: "health" }).get("/health", async ({ set }) => {
+export const health = new Elysia({ name: "health" }).get("/health", async ({ set }) => {
   const startedAt = performance.now();
   let database: "up" | "down" = "down";
 

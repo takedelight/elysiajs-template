@@ -1,12 +1,12 @@
 import { Elysia } from "elysia";
-import { routes } from "@/routes";
-import { healthRoutes } from "@/routes/health";
+import { system } from "@/modules/system";
+import { health } from "@/modules/health";
 import { buildErrorResponse } from "@/utils/errors";
 import { logger } from "@/utils/logger";
 
 export const app = new Elysia({ name: "app" })
   .use(logger)
-  .use([healthRoutes, routes])
+  .use([health, system])
   .onError(({ request, code, error, set }) => {
     const response = buildErrorResponse(code, error);
     set.status = response.status;

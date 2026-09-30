@@ -1,4 +1,4 @@
-import { env } from "@/utils/env/env.schema";
+import { env } from "@/utils/env";
 import { app } from "@/app";
 
 app.listen(env.PORT);

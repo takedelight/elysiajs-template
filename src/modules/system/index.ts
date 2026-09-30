@@ -1,6 +1,6 @@
 import { Elysia, t } from "elysia";
 
-export const routes = new Elysia({ name: "routes" })
+export const system = new Elysia({ name: "system" })
   .get("/", () => ({ name: "elysia-template", status: "ok" }))
   .group("/api/v1", (api) =>
     api

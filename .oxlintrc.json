@@ -10,12 +10,12 @@
       {
         "object": "Bun",
         "property": "env",
-        "message": "Use import { env } from src/utils/env/env.schema instead."
+        "message": "Use import { env } from src/utils/env instead."
       },
       {
         "object": "process",
         "property": "env",
-        "message": "Use import { env } from src/utils/env/env.schema instead."
+        "message": "Use import { env } from src/utils/env instead."
       }
     ],
     "typescript/no-non-null-assertion": "error",
@@ -25,7 +25,7 @@
   "jsPlugins": ["eslint-plugin-drizzle"],
   "overrides": [
     {
-      "files": ["src/utils/env/env.schema.ts"],
+      "files": ["src/utils/env/index.ts"],
       "rules": {
         "no-restricted-properties": "off",
         "no-console": "off",
