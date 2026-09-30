@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
-import "./utils/env/env.schema";
-import { env } from "./utils/env/env.schema";
+import "@/utils/env/env.schema";
+import { env } from "@/utils/env/env.schema";
 
 const app = new Elysia().get("/", () => "Hello Elysia").listen(env.PORT);
 
