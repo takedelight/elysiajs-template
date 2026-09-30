@@ -8,7 +8,7 @@ const call = async (path: string) => {
 };
 
 describe("GET /", () => {
-  test("отдаёт имя сервиса и статус — контракт для клиентов шаблона", async () => {
+  test("returns service name and status — the contract clients rely on", async () => {
     const { status, body } = await call("/");
     expect(status).toBe(200);
     expect(body).toEqual({ name: "elysia-template", status: "ok" });
@@ -16,27 +16,27 @@ describe("GET /", () => {
 });
 
 describe("GET /api/v1/hello", () => {
-  test("без query использует имя по умолчанию", async () => {
+  test('defaults to "world" when no query is given', async () => {
     const { status, body } = await call("/api/v1/hello");
     expect(status).toBe(200);
     expect(body).toEqual({ hello: "world" });
   });
 
-  test("возвращает переданное имя", async () => {
+  test("returns the provided name", async () => {
     const { status, body } = await call("/api/v1/hello?name=nikol");
     expect(status).toBe(200);
     expect(body).toEqual({ hello: "nikol" });
   });
 
-  test("пустое имя невалидно — защита от битых данных на входе", async () => {
+  test("rejects an empty name to keep invalid data out", async () => {
     const { status, body } = await call("/api/v1/hello?name=");
     expect(status).toBe(422);
     expect(body).toMatchObject({ error: { code: "VALIDATION" } });
   });
 });
 
-describe("обработка ошибок", () => {
-  test("неизвестный маршрут → 404 в едином формате", async () => {
+describe("error handling", () => {
+  test("unknown route returns 404 in the unified error format", async () => {
     const { status, body } = await call("/definitely-missing");
     expect(status).toBe(404);
     expect(body).toEqual({
@@ -46,7 +46,7 @@ describe("обработка ошибок", () => {
 });
 
 describe("GET /health", () => {
-  test("статус согласован с состоянием базы: up ⇔ 200, down ⇔ 503", async () => {
+  test("status matches database state: up ⇔ 200, down ⇔ 503", async () => {
     const { status, body } = await call("/health");
     const health = body as { status: string; database: string; uptime: number };
 
