@@ -1,15 +1,20 @@
 {
-  "name": "app",
+  "name": "elysia-template",
   "version": "1.0.50",
+  "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/main.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "drizzle-orm": "^1.0.0-rc.4",
+    "elysia": "latest",
+    "pg": "^8.23.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "bun-types": "latest"
-  },
-  "module": "src/index.js"
+    "@types/pg": "^8.23.1",
+    "bun-types": "latest",
+    "drizzle-kit": "^1.0.0-rc.4"
+  }
 }
