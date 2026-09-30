@@ -1,9 +1,14 @@
-import { Elysia } from "elysia";
-import "@/utils/env/env.schema";
 import { env } from "@/utils/env/env.schema";
+import { app } from "@/app";
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(env.PORT);
+app.listen(env.PORT);
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port} [${env.NODE_ENV}]`,
-);
+console.log(`🦊 Elysia is running at http://localhost:${env.PORT} [${env.NODE_ENV}]`);
+
+for (const signal of ["SIGINT", "SIGTERM"] as const) {
+  process.on(signal, () => {
+    console.log(`${signal} received, shutting down`);
+    app.stop();
+    process.exit(0);
+  });
+}
