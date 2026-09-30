@@ -4,7 +4,10 @@
   "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/main.ts"
+    "dev": "bun run --watch src/main.ts",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt ."
   },
   "dependencies": {
     "drizzle-orm": "^1.0.0-rc.4",
@@ -14,7 +17,11 @@
   },
   "devDependencies": {
     "@types/pg": "^8.23.1",
+    "@typescript-eslint/utils": "^8.71.0",
     "bun-types": "latest",
-    "drizzle-kit": "^1.0.0-rc.4"
+    "drizzle-kit": "^1.0.0-rc.4",
+    "eslint-plugin-drizzle": "^0.2.3",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0"
   }
 }
