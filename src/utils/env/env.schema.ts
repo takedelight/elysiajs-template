@@ -7,7 +7,9 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(16),
 });
 
-const parsed = envSchema.safeParse(Bun.env);
+// process.env — не Bun.env: конфиг drizzle-kit грузится в своём рантайме (без Bun),
+// где `Bun` не определён. В Bun process.env и Bun.env — одно и то же.
+const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
   console.error("❌ Invalid environment variables:", z.treeifyError(parsed.error));
