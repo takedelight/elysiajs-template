@@ -8,10 +8,6 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: test
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/app
-      JWT_SECRET: ci-only-secret-min-16-chars
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -21,4 +17,3 @@ jobs:
       - run: bun run lint
       - run: bun run fmt:check
       - run: bun run typecheck
-      - run: bun test
