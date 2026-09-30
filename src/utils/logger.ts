@@ -11,10 +11,6 @@ const formatLine = (request: Request, status: number, extra?: string): string =>
   return `[${time}] ${request.method} ${path} ${status} ${duration}ms${extra ? ` ${extra}` : ""}`;
 };
 
-/**
- * Минимальный логгер запросов без внешних зависимостей.
- * Замените на pino/structlog — хуки останутся теми же.
- */
 export const logger = new Elysia({ name: "logger" })
   .onRequest(({ request }) => {
     startedAt.set(request, performance.now());
@@ -28,5 +24,4 @@ export const logger = new Elysia({ name: "logger" })
     const message = body.error.message.split("\n")[0]?.slice(0, 200);
     console.error(formatLine(request, status, `code=${String(code)} error=${message}`));
   })
-  // Хуки плагина применяются ко всем роутам приложения, а не только к его собственным
   .as("global");

@@ -2,10 +2,6 @@ import { Elysia } from "elysia";
 import { sql } from "drizzle-orm";
 import { db } from "@/utils/database/db";
 
-/**
- * Liveness/readiness endpoint.
- * 200 — приложение и БД доступны, 503 — БД недоступна.
- */
 export const healthRoutes = new Elysia({ name: "health" }).get("/health", async ({ set }) => {
   const startedAt = performance.now();
   let database: "up" | "down" = "down";
