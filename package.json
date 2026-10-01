@@ -3,6 +3,7 @@
   "version": "1.0.50",
   "module": "src/index.js",
   "scripts": {
+    "prepare": "husky",
     "test": "bun test",
     "dev": "bun run --watch src/main.ts",
     "start": "bun run src/main.ts",
@@ -27,8 +28,19 @@
     "bun-types": "latest",
     "drizzle-kit": "^1.0.0-rc.4",
     "eslint-plugin-drizzle": "^0.2.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
     "oxfmt": "^0.71.0",
     "oxlint": "^1.86.0",
     "typescript": "^7.0.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "oxlint --fix",
+      "oxfmt"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "oxfmt"
+    ]
   }
 }
